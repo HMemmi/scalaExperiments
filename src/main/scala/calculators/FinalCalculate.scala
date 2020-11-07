@@ -1,6 +1,8 @@
 package calculators {
   object Calculators {
+
     type Operator = (Int, Int) => Int
+
     object Operator {
       val operators: Map[String, Operator] = Map(
         "+" -> { _ + _ },
@@ -12,6 +14,7 @@ package calculators {
         operators.get(token)
       }
     }
+
     object Number {
       def unapply(token: String): Option[Int] = try {
         Some(token.toInt)
@@ -19,9 +22,11 @@ package calculators {
         case _: NumberFormatException => None
       }
     }
+
     sealed trait Expression
     case class NumberExpression(value: Int) extends Expression
     case class OperationExpression(lhs: Expression, rhs: Expression, op: Operator) extends Expression
+
     def step(list: List[Expression], token: String): List[Expression] = {
       token match {
         case Number(number) => NumberExpression(number) :: list
@@ -32,21 +37,25 @@ package calculators {
         case _ => throw new IllegalArgumentException("invalid token" + token);
       }
     }
+
     def parse(expression: String): Expression = {
       val tokens = expression.split(" ")
       val stack = tokens.foldLeft(List.empty[Expression]) { step }
       stack.head
     }
+
     def calculate(expression: Expression): Int = expression match {
       case NumberExpression(value)           => value
       case OperationExpression(lhs, rhs, op) => op(calculate(lhs), calculate(rhs))
     }
+
     def toInfix(expression: Expression): String = {
       expression match {
         case NumberExpression(value)           => value.toString
         case OperationExpression(rhs, lhs, op) => s"(${toInfix(lhs) + Operator.operatorTr(op) + toInfix(rhs)})"
       }
     }
+
     def main(args: Array[String]): Unit =
       if (args.length != 1) {
         throw new IllegalArgumentException("Usage: Calculator <expression> " + args.length)
