@@ -1,7 +1,5 @@
 package generics
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.ForEach
-
 sealed abstract class Creature[A <: Creature[A]] extends Eat with Ordered[A] {
   def name: String
   def nickname: String
