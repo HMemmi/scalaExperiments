@@ -6,7 +6,7 @@ class Person private (val name: String, var firstName: String)(val callback: (Op
 
   //def this() = this("", "")
   def +(p: Person) = this.partner = Option(p);
-  def -() = this.partner = None: Option[Person]
+  def -() = this.partner = None
   def myPartner = this.partner
 
   callback(age, this)
@@ -30,21 +30,25 @@ object main {
   def main(args: Array[String]): Unit = {
     val p1 = Person("hichem", "memmi");
     p1.firstName = "aa";
-    println("Count " + Person.count)
+    println(s"Count ${Person.count}")
     val p2 = Person();
-    println("Count " + Person.count)
+    println(s"Count ${Person.count}")
     p2.age = Option(12)
-
-    val s = { x: Int => x * 2 }
-    val s1: Int => Int = { _ * 2 }
-    val s2 = { (_: Int) * 2 }
 
     p1 + p2
 
-    println("My partner is " + p1.myPartner.get.name)
+    println(s"My partner is ${p1.myPartner.get.name}")
     p1 -
 
-    println("My partner is " + p1.myPartner)
+    println(s"My partner is ${p1.myPartner}")
+
+    val s = { x: Int => x * 2 }
+    val s1: (Int) => Int = { _ * 2 }
+    val s2 = { (_: Int) * 2 }
+
+    println(s"result: ${s(2)}")
+    println(s"result: ${s1(2)}")
+    println(s"result ${s2(2)}")
 
   }
 }
