@@ -27,7 +27,7 @@ package calculators {
     case class NumberExpression(value: Int) extends Expression
     case class OperationExpression(lhs: Expression, rhs: Expression, op: Operator) extends Expression
 
-    def step(list: List[Expression], token: String): List[Expression] = {
+    def step(list: List[Expression], token: String): List[Expression] =
       token match {
         case Number(number) => NumberExpression(number) :: list
         case Operator(op) => list match {
@@ -36,7 +36,6 @@ package calculators {
         }
         case _ => throw new IllegalArgumentException("invalid token" + token);
       }
-    }
 
     def parse(expression: String): Expression = {
       val tokens = expression.split(" ")
@@ -56,12 +55,13 @@ package calculators {
       }
     }
 
-    def main(args: Array[String]): Unit =
+    def main(args: Array[String]): Unit = {
       if (args.length != 1) {
         throw new IllegalArgumentException("Usage: Calculator <expression> " + args.length)
       } else {
         val expression = parse(args(0))
         println(s"${toInfix(expression)} = ${calculate(expression)}")
       }
+    }
   }
 }
