@@ -1,6 +1,6 @@
 package calculator;
 
-import calculators.Person;
+import currying.callback.Person;
 
 public class Main {
 	public static void main(String[] args) {
